@@ -1,3 +1,5 @@
+CREATE DATABASE exp6;
+USE exp6;
 CREATE TABLE employee2 (
     empno VARCHAR(4) PRIMARY KEY,
     emp_name VARCHAR(30),
