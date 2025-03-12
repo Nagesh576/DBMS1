@@ -1,26 +1,20 @@
-CREATE DATABASE SchoolDB;
-USE SchoolDB;
-
--- 1
-CREATE TABLE Student (
+CREATE TABLE Student1 (
     id INT PRIMARY KEY AUTO_INCREMENT,
-    admission_no VARCHAR(45) NOT NULL,
+    admission_no VARCHAR(45) NOT NULL UNIQUE,
     first_name VARCHAR(45) NOT NULL,
     last_name VARCHAR(45) NOT NULL,
     age INT,
     city VARCHAR(25) NOT NULL
 );
 
--- 2
 CREATE TABLE Fee (
     admission_no VARCHAR(45) NOT NULL,
     course VARCHAR(45) NOT NULL,
     amount_paid INT
 );
 
--- 3
-INSERT INTO Student (admission_no, first_name, last_name, age, city) 
-VALUES 
+-- Insert data into Student1
+INSERT INTO Student1 (admission_no, first_name, last_name, age, city) VALUES
 (3354, 'Luisa', 'Evans', 13, 'Texas'),
 (2135, 'Paul', 'Ward', 15, 'Alaska'),
 (4321, 'Peter', 'Bennett', 14, 'California'),
@@ -30,47 +24,28 @@ VALUES
 (7555, 'Antonio', 'Butler', 14, 'New York'),
 (8345, 'Diego', 'Cox', 13, 'California');
 
--- 4
-INSERT INTO Fee (admission_no, course, amount_paid) 
-VALUES 
+-- Insert data into Fee
+INSERT INTO Fee (admission_no, course, amount_paid) VALUES
 (3354, 'Java', 20000),
 (7555, 'Android', 22000),
-(4321, 'Python', 18000),
+(4321, 'Python', 18000),	
 (8345, 'SQL', 15000),
 (5112, 'Machine Learning', 30000);
 
--- INNER JOIN
+-- Join commands
+SELECT Student1.admission_no, Student1.first_name, Student1.last_name, Fee.course, Fee.amount_paid
+FROM Student1 INNER JOIN Fee ON Student1.admission_no = Fee.admission_no;
 
--- 5
-SELECT Student.admission_no, Student.first_name, Student.last_name, 
-       Fee.course, Fee.amount_paid
-FROM Student 
-INNER JOIN Fee ON Student.admission_no = Fee.admission_no;
+SELECT Student1.admission_no, Student1.first_name, Student1.last_name, Fee.course, Fee.amount_paid
+FROM Student1 LEFT OUTER JOIN Fee ON Student1.admission_no = Fee.admission_no;
 
--- LEFT OUTER JOIN
+SELECT Student1.admission_no, Student1.first_name, Student1.last_name, Fee.course, Fee.amount_paid
+FROM Student1 RIGHT OUTER JOIN Fee ON Student1.admission_no = Fee.admission_no;
 
--- 6
-SELECT Student.admission_no, Student.first_name, Student.last_name, 
-       Fee.course, Fee.amount_paid
-FROM Student 
-LEFT OUTER JOIN Fee ON Student.admission_no = Fee.admission_no;
-
--- RIGHT OUTER JOIN
-
--- 7
-SELECT Student.admission_no, Student.first_name, Student.last_name, 
-       Fee.course, Fee.amount_paid
-FROM Student 
-RIGHT OUTER JOIN Fee ON Student.admission_no = Fee.admission_no;
-
--- FULL OUTER JOIN 
--- 8
-SELECT Student.admission_no, Student.first_name, Student.last_name, 
-       Fee.course, Fee.amount_paid
-FROM Student 
-LEFT OUTER JOIN Fee ON Student.admission_no = Fee.admission_no
+SELECT Student1.admission_no, Student1.first_name, Student1.last_name, Fee.course, Fee.amount_paid
+FROM Student1
+LEFT JOIN Fee ON Student1.admission_no = Fee.admission_no
 UNION
-SELECT Student.admission_no, Student.first_name, Student.last_name, 
-       Fee.course, Fee.amount_paid
-FROM Student 
-RIGHT OUTER JOIN Fee ON Student.admission_no = Fee.admission_no;
+SELECT Student1.admission_no, Student1.first_name, Student1.last_name, Fee.course, Fee.amount_paid
+FROM Student1
+RIGHT JOIN Fee ON Student1.admission_no = Fee.admission_no;
