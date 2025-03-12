@@ -1,52 +1,50 @@
-CREATE DATABASE EmployeeDB;
-USE EmployeeDB;
-
-CREATE TABLE employee (
-    empno VARCHAR(10) PRIMARY KEY,
-    emp_name VARCHAR(50),
-    dept VARCHAR(50),
+CREATE TABLE employee2 (
+    empno VARCHAR(4) PRIMARY KEY,
+    emp_name VARCHAR(30),
+    dept VARCHAR(30),
     salary INT,
-    dob DATE,
-    branch VARCHAR(50)
+    doj DATE,
+    branch VARCHAR(20)
 );
 
-INSERT INTO employee (empno, emp_name, dept, salary, dob, branch) VALUES
-('E101', 'Amit', 'Production', 45000, '2000-03-12', 'Bangalore'),
-('E102', 'Amit', 'HR', 70000, '2002-07-03', 'Bangalore'),
-('E103', 'Sunita', 'Management', 120000, '2001-01-11', 'Mysore'),
-('E105', 'Sunita', 'IT', 67000, '2001-08-01', 'Mysore'),
-('E106', 'Mahesh', 'Civil', 145000, '2003-09-20', 'Mumbai');
+-- Insert data into employee2 table
+INSERT INTO employee2 VALUES
+('E101', 'Amit', 'Production', 45000, '2020-03-12', 'Bangalore'),
+('E102', 'Amit', 'HR', 70000, '2022-07-02', 'Bangalore'),
+('E103', 'Sunita', 'Management', 120000, '2021-01-01', 'Mysore'),
+('E105', 'Sunita', 'IT', 67000, '2021-08-01', 'Mysore'),
+('E106', 'Mahesh', 'Civil', 145000, '2023-09-20', 'Mumbai');
 
--- 1
-SELECT * FROM employee;
+-- Select all from employee2
+SELECT * FROM employee2;
 
--- 2
-SELECT empno, salary FROM employee;
+-- Select empno and salary from employee2
+SELECT empno, salary FROM employee2;
 
--- 3
-SELECT AVG(salary) FROM employee;
+-- Calculate average salary
+SELECT AVG(salary) FROM employee2;
 
--- 4
-SELECT COUNT(*) FROM employee;
+-- Count total employees
+SELECT COUNT(*) FROM employee2;
 
--- 5
-SELECT COUNT(DISTINCT emp_name) FROM employee;
+-- Count distinct employee names
+SELECT COUNT(DISTINCT emp_name) FROM employee2;
 
--- 6
-SELECT emp_name, SUM(salary), COUNT(*)
-FROM employee
-GROUP BY emp_name;
+-- Group by emp_name and calculate sum and count
+SELECT emp_name, SUM(salary), COUNT(*) FROM employee2 GROUP BY emp_name;
 
--- 7
-SELECT emp_name, SUM(salary)
-FROM employee
-GROUP BY emp_name
-HAVING SUM(salary) > 120000;
+-- Filter by sum of salary
+SELECT emp_name, SUM(salary) FROM employee2 GROUP BY emp_name HAVING SUM(salary) > 120000;
 
--- 8
-SELECT emp_name FROM employee
-ORDER BY emp_name DESC;
+-- Order by emp_name descending
+SELECT emp_name FROM employee2 ORDER BY emp_name DESC;
 
--- 9
-SELECT * FROM employee
-WHERE emp_name = 'Amit' AND salary > 50000;
+-- Get current date
+SELECT CURRENT_DATE;
+
+-- Order by emp_name ascending
+SELECT emp_name FROM employee2 ORDER BY emp_name;
+
+-- Filter by emp_name and salary
+SELECT * FROM employee2 WHERE emp_name = 'Amit' AND salary > 50000;
+
