@@ -1,55 +1,38 @@
-CREATE DATABASE CompanyDB;
-USE CompanyDB;
-
-CREATE TABLE Employee (
+CREATE DATABASE exp6;
+USE exp6;
+CREATE TABLE EMPLOYEE3 (
     Emp_no INT PRIMARY KEY,
-    E_name VARCHAR(50),
+    E_name VARCHAR(50) NOT NULL,
     E_address VARCHAR(100),
     E_ph_no VARCHAR(15),
     Dept_no INT,
     Dept_name VARCHAR(50),
     Job_id INT,
     Designation VARCHAR(50),
-    Salary INT,
-    Date_of_Joining DATE
+    Salary DECIMAL(10,2),
+    Joining_Date DATE
 );
 
-INSERT INTO Employee (Emp_no, E_name, E_address, E_ph_no, Dept_no, Dept_name, Job_id, Designation, Salary, Date_of_Joining) 
-VALUES 
-(101, 'Rajesh Kumar', 'Hyderabad', '9876543210', 1, 'HR', 1001, 'MANAGER', 90000, '1982-05-12'),
-(102, 'Priya Sharma', 'Mumbai', '9876543211', 2, 'IT', 1002, 'IT PROFF', 60000, '1983-07-21'),
-(103, 'Amit Singh', 'Delhi', '9876543212', 3, 'Finance', 1003, 'CLERK', 40000, '1985-03-14'),
-(104, 'Neha Gupta', 'Chennai', '9876543213', 2, 'IT', 1004, 'IT PROFF', 55000, '1984-11-30'),
-(105, 'Rahul Yadav', 'Pune', '9876543214', 4, 'Sales', 1005, 'ANALYST', 70000, '1986-08-10'),
-(106, 'Suresh Reddy', 'Bangalore', '9876543215', 3, 'Finance', 1006, 'MANAGER', 95000, '1980-01-20'),
-(107, 'Kiran Rao', 'Kolkata', '9876543216', 2, 'IT', 1007, 'CLERK', 35000, '1987-02-25'),
-(108, 'Manoj Patil', 'Ahmedabad', '9876543217', 4, 'Sales', 1008, 'ANALYST', 72000, '1988-12-15');
+-- Insert data into EMPLOYEE3
+INSERT INTO EMPLOYEE3 (Emp_no, E_name, E_address, E_ph_no, Dept_no, Dept_name, Job_id, Designation, Salary, Joining_Date) VALUES 
+(101, 'Alice Johnson', '123 Main St', '9876543210', 1, 'HR', 201, 'MANAGER', 75000.00, '2020-01-01'),
+(102, 'Bob Smith', '456 Elm St', '8765432109', 2, 'IT', 202, 'ENGINEER', 60000.00, '2021-01-01'),
+(103, 'Charlie Brown', '789 Oak St', '7654321098', 3, 'Finance', 203, 'MANAGER', 80000.00, '2022-01-01');
 
+-- Select managers
+SELECT Emp_no, E_name, Salary FROM EMPLOYEE3 WHERE Designation = 'MANAGER';
 
+-- Select employees with salary greater than any in IT department
+SELECT * FROM EMPLOYEE3 WHERE Salary > ANY (SELECT Salary FROM EMPLOYEE3 WHERE Dept_name = 'IT');
 
--- 1
-SELECT Emp_no, E_name, Salary 
-FROM Employee 
-WHERE Designation = 'MANAGER';
+-- Select employees who joined after 1981
+SELECT * FROM EMPLOYEE3 WHERE YEAR(Joining_Date) > 1981 ORDER BY Designation ASC;
 
--- 2
-SELECT * FROM Employee
-WHERE Salary > ANY (
-    SELECT Salary FROM Employee WHERE Designation = 'IT PROFF'
-);
+-- Calculate experience and daily salary
+SELECT Emp_no, E_name, 
+       TIMESTAMPDIFF(YEAR, Joining_Date, CURDATE()) AS Experience, 
+       Salary / 30 AS Daily_Salary 
+FROM EMPLOYEE3;
 
--- 3
-SELECT * FROM Employee
-WHERE YEAR(Date_of_Joining) > 1981
-ORDER BY Designation ASC;
-
--- 4
-SELECT E_name, 
-       Salary, 
-       ROUND(Salary / 30, 2) AS Daily_Salary,
-       TIMESTAMPDIFF(YEAR, Date_of_Joining, CURDATE()) AS Experience
-FROM Employee;
-
--- 5
-SELECT * FROM Employee
-WHERE Designation IN ('CLERK', 'ANALYST');
+-- Select employees with specific designations
+SELECT * FROM EMPLOYEE3 WHERE Designation IN ('CLERK', 'ANALYST');
